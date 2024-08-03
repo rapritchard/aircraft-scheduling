@@ -11,8 +11,9 @@
 ## Assumptions
 
 - We will only support desktop (unless I can fit in making a mobile design)
-- We will use the Context API and the Fetch API to reduce overall size.
-- Aircraft can only start from their base but can end the day at any airport.
-- Clicking on an aircraft will select it for editing its rotation.
-- Clicking on a flight will add it to the rotation, and clicking on the flight in the rotation list will remove it.
-- The list of flights will adjust based on what the most recent flight in the rotation is to filter out flights that will not be possible.
+- We will only support modern browsers (Sorry IE)
+- All the aircraft have the base of "EGKK" which has no matches in the flights json, so I have assumed that we can travel to any airport at first.
+  - Aircraft cannot take on other flights whilst flying to first airport
+  - Time spent flying to the first airport will be treated as "idle" on the timeline as we are not ferrying any people / cargo to simplify timeline.
+- Users can select flights in any order, we will make sure they are only allowed to choose valid flights and that they are sorted correctly
+- Any flight that happens over midnight cannot be done as all flights must be grounded by that point, so we'll just remove them from the list of flights

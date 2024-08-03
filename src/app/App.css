@@ -1,0 +1,21 @@
+@import '../../node_modules/normalize.css/normalize.css';
+:root {
+  --box-background-color: #eff1f2;
+  --box-background-hover-color: rgba(73, 133, 224, 0.12);
+  --box-alt-background-color: #ececed;
+  --box-shadow: 0 2px 4px #0000001a;
+  --border-radius: 4px;
+  --branding-color: #2e5c99;
+  --idle-color: #a9a9a9;
+  --scheduled-color: #148a14;
+  --turnaround-color: #b80db8;
+  --box-spacing: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--box-alt-background-color);
+}

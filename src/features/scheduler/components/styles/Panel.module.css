@@ -1,0 +1,33 @@
+.panel {
+  align-self: flex-start;
+  background-color: #fff;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 25%;
+  height: 80vh;
+}
+
+.panelHeading {
+  background-color: var(--branding-color);
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  text-align: center;
+  color: #fff;
+}
+
+.panelHeading h2 {
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+}
+
+.panelContainer {
+  padding: var(--box-spacing);
+  display: flex;
+  flex-direction: column;
+  gap: var(--box-spacing);
+  overflow: hidden;
+  overflow-y: auto;
+  mask-image: linear-gradient(to bottom, black calc(100% - 32px), transparent 100%);
+}

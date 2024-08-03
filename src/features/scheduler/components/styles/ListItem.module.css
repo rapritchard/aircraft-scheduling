@@ -1,0 +1,21 @@
+.listItem {
+  cursor: pointer;
+  box-shadow: var(--box-shadow);
+  width: 100%;
+  border: 1px solid var(--box-alt-background-color);
+  border-radius: var(--border-radius);
+  padding: var(--box-spacing);
+  background: #fff;
+}
+
+.listItem:hover {
+  background-color: var(--box-background-hover-color);
+}
+
+.listItem h4 {
+  margin: 0 0 8px 0;
+}
+
+.listItem:last-child {
+  margin-bottom: 32px;
+}

@@ -1,0 +1,81 @@
+.timeline {
+  margin-top: var(--box-spacing);
+  box-shadow: var(--box-shadow);
+  background: #fff;
+  padding: var(--box-spacing);
+  border-radius: var(--border-radius);
+}
+
+.timelineLabels {
+  min-height: 24px;
+  display: flex;
+}
+
+.timelineLabels span {
+  line-height: 24px;
+  font-size: 14px;
+}
+
+.timelineLabels span:nth-child(odd){
+  flex: 1;
+}
+
+.timelineTrack {
+  height: 40px;
+  border: 1px solid rgba(19, 19, 21, 0.6);
+  background-color: var(--idle-color);
+  position: relative;
+}
+
+.timelineBlock,
+.timelineTurnover {
+  position: absolute;
+  height: 100%;
+}
+
+.timelineBlock {
+  background-color: var(--scheduled-color);
+}
+
+.timelineTurnover {
+  background-color: var(--turnaround-color);
+  right: 0;
+}
+
+.timelineKeys {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--box-spacing);
+}
+
+.timelineKey {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  flex: 1;
+}
+
+.timelineKey .circle {
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: var(--idle-color);
+  border-radius: 50%;
+}
+
+.active {
+  flex: 0;
+}
+
+.turnaround {
+  justify-content: flex-end;
+}
+
+.active .circle {
+  background-color: var(--scheduled-color);
+}
+
+.turnaround .circle {
+  background-color: var(--turnaround-color);
+}

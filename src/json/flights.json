@@ -673,5 +673,14 @@
       "readable_arrival":"10:15",
       "origin":"LSGG",
       "destination":"EHAM"
+   },
+      {
+      "ident":"AS1852",
+      "departuretime":84700,
+      "arrivaltime":14400,
+      "readable_departure":"23:31",
+      "readable_arrival":"04:00",
+      "origin":"LFSB",
+      "destination":"EHAM"
    }
 ]

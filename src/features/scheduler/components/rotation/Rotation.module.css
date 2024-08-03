@@ -1,0 +1,21 @@
+.rotation {
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 50%;
+  margin: 0 var(--box-spacing);;
+  display: flex;
+  flex-direction: column;
+  gap: var(--box-spacing);
+}
+
+.rotationHeading {
+  background: var(--branding-color);
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  color: #fff;
+  text-align: center;
+}
+
+.rotationHeading h2 {
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+}
