@@ -84,10 +84,10 @@ const scheduleReducer = (state, action) => {
         (flight) => flight.ident === flightIdentToRemove
       );
 
-      const { rotation } = foundAircraft;
+      const rotations = [...foundAircraft.rotation];
 
-      const updatedRotations = rotation.slice(0, rotationToRemoveIndex);
-      const flightsToUpdate = rotation.slice(rotationToRemoveIndex);
+      const updatedRotations = rotations.slice(0, rotationToRemoveIndex);
+      const flightsToUpdate = rotations.slice(rotationToRemoveIndex);
 
       const updatedFlights = flightsToUpdate.map((flight) => ({
         ...flight,
