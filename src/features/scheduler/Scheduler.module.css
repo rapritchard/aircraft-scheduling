@@ -2,5 +2,5 @@
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
-  margin: 0 64px;
+  margin: 0 32px 64px 32px;
 }

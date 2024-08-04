@@ -75,20 +75,30 @@ const scheduleReducer = (state, action) => {
     }
     case "REMOVE_ROTATION": {
       const { aircraft, flights, selectedAircraftIdent } = state;
-      const flightIdent = action.payload;
+      const flightIdentToRemove = action.payload;
 
       const foundAircraft = aircraft.find(
         (a) => a.ident === selectedAircraftIdent
       );
-
-      const updatedRotation = foundAircraft.rotation.filter(
-        (r) => r.ident !== flightIdent
+      const rotationIndex = foundAircraft.rotation.findIndex(
+        (flight) => flight.ident === flightIdentToRemove
       );
+
+      const { rotation } = foundAircraft;
+
+      const updatedRotations = rotation.slice(0, rotationIndex);
+      const flightsToUpdate = rotation.slice(rotationIndex);
+
+      const updatedFlights = flightsToUpdate.map((flight) => ({
+        ...flight,
+        assignedToAircraft: false,
+        aircraftIndent: null,
+      }));
 
       const updatedCraft = {
         ...foundAircraft,
-        utilised: calculateUsage(updatedRotation),
-        rotation: updatedRotation,
+        utilised: calculateUsage(updatedRotations),
+        rotation: updatedRotations,
       };
 
       return {
@@ -96,15 +106,7 @@ const scheduleReducer = (state, action) => {
         aircraft: aircraft.map((a) =>
           a.ident === updatedCraft.ident ? updatedCraft : a
         ),
-        flights: flights.map((flight) =>
-          flight.ident === flightIdent
-            ? {
-                ...flight,
-                assignedToAircraft: false,
-                aircraftIndent: null,
-              }
-            : flight
-        ),
+        flights: [...flights, ...updatedFlights],
       };
     }
     case "SELECT_AIRCRAFT": {

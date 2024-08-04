@@ -3,15 +3,15 @@ import styles from "./Flight.module.css";
 
 export const Flight = ({
   destination,
-  handleFlightClick,
   ident,
+  onClick,
   origin,
   readableArrival,
   readableDeparture,
 }) => (
   <div
     className={[styles.flight, listItemStyles.listItem].join(" ")}
-    onClick={() => handleFlightClick(ident)}
+    onClick={() => onClick(ident)}
   >
     <h4>{ident}</h4>
     <div className={styles.flightMeta}>

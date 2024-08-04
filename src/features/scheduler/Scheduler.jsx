@@ -9,21 +9,16 @@ import styles from "./Scheduler.module.css";
 import { Rotation } from "./components/rotation/Rotation";
 
 export const Scheduler = () => {
-  const { scheduleDispatch, scheduler } = useContext(ScheduleContext);
+  const { scheduleDispatch } = useContext(ScheduleContext);
   const [loading, isLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const promises = [
-          fetch("https://recruiting-assessment.alphasights.com/api/aircrafts"),
-          fetch("https://recruiting-assessment.alphasights.com/api/flights"),
-        ];
-
-        const responses = await Promise.all(promises);
-        const [aircraft, flights] = await Promise.all(
-          responses.map((response) => response.json())
-        );
+        const [aircraft, flights] = await Promise.all([
+          fetchAirFleet(),
+          fetchFlights(),
+        ]);
         scheduleDispatch({
           type: "SET_DATA",
           payload: {

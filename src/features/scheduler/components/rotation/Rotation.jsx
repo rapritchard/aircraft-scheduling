@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { ScheduleContext } from "../../../../stores/schedule-context";
 
 import styles from "./Rotation.module.css";
-import listItemStyles from "../styles/ListItem.module.css";
 import { Flight } from "../flight/Flight";
 import { Timeline } from "../timeline/Timeline";
 
@@ -16,11 +15,7 @@ export const Rotation = () => {
       (a) => a.ident === schedule.selectedAircraftIdent
     );
     setAircraft(selectedAircraft);
-    setRotation(
-      selectedAircraft.rotation.sort(
-        (a, b) => a.departuretime - b.departuretime
-      )
-    );
+    setRotation(selectedAircraft.rotation);
   };
 
   useEffect(() => {
@@ -49,8 +44,8 @@ export const Rotation = () => {
         <Flight
           key={flight.ident}
           destination={flight.destination}
-          handleFlightClick={handleFlightClick}
           ident={flight.ident}
+          onClick={handleFlightClick}
           origin={flight.origin}
           readableArrival={flight.readable_arrival}
           readableDeparture={flight.readable_departure}
