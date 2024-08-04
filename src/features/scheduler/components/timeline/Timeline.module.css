@@ -1,36 +1,36 @@
 .timeline {
-  margin-top: var(--box-spacing);
-  box-shadow: var(--box-shadow);
   background: #fff;
-  padding: var(--box-spacing);
   border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin-top: var(--box-spacing);
+  padding: var(--box-spacing);
 }
 
 .timelineLabels {
-  min-height: 24px;
   display: flex;
+  min-height: 24px;
 }
 
 .timelineLabels span {
-  line-height: 24px;
   font-size: 14px;
+  line-height: 24px;
 }
 
-.timelineLabels span:nth-child(odd){
+.timelineLabels span:nth-child(odd) {
   flex: 1;
 }
 
 .timelineTrack {
-  height: 40px;
-  border: 1px solid rgba(19, 19, 21, 0.6);
   background-color: var(--idle-color);
+  border: 1px solid rgba(19, 19, 21, 0.6);
+  height: 40px;
   position: relative;
 }
 
 .timelineBlock,
 .timelineTurnover {
-  position: absolute;
   height: 100%;
+  position: absolute;
 }
 
 .timelineBlock {
@@ -49,19 +49,19 @@
 }
 
 .timelineKey {
-  display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-size: 14px;
+  display: inline-flex;
   flex: 1;
+  font-size: 14px;
+  gap: 4px;
 }
 
 .timelineKey .circle {
-  display: block;
-  width: 10px;
-  height: 10px;
   background-color: var(--idle-color);
   border-radius: 50%;
+  display: block;
+  height: 10px;
+  width: 10px;
 }
 
 .active {

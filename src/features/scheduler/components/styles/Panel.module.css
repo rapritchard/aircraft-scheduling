@@ -3,18 +3,18 @@
   background-color: #fff;
   box-shadow: var(--box-shadow);
   display: flex;
+  flex-basis: 25%;
   flex-direction: column;
   flex-grow: 1;
   flex-shrink: 0;
-  flex-basis: 25%;
   height: 80vh;
 }
 
 .panelHeading {
   background-color: var(--branding-color);
   border-radius: var(--border-radius) var(--border-radius) 0 0;
-  text-align: center;
   color: #fff;
+  text-align: center;
 }
 
 .panelHeading h2 {
@@ -23,12 +23,12 @@
 }
 
 .panelContainer {
-  padding: var(--box-spacing);
+  mask-image: linear-gradient(to bottom, black calc(100% - 32px), transparent 100%);
   overflow: hidden;
   overflow-y: auto;
-  mask-image: linear-gradient(to bottom, black calc(100% - 32px), transparent 100%);
+  padding: var(--box-spacing);
 }
 
-.panelContainer > div:not(:last-child) {
+.panelContainer>div:not(:last-child) {
   margin-bottom: var(--box-spacing);
 }
