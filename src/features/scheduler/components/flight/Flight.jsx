@@ -12,6 +12,7 @@ export const Flight = ({
   <div
     className={[styles.flight, listItemStyles.listItem].join(" ")}
     onClick={() => onClick(ident)}
+    role="button"
   >
     <h4>{ident}</h4>
     <div className={styles.flightMeta}>

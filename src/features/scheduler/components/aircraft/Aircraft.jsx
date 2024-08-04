@@ -19,6 +19,7 @@ export const Aircraft = ({ base, ident, onClick, selected, utilised }) => {
         selected ? styles.selected : "",
       ].join(" ")}
       onClick={() => onClick(ident)}
+      role="button"
     >
       <h4>{ident}</h4>
       <div className={styles.aircraftMeta}>

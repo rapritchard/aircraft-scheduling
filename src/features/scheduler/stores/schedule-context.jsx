@@ -1,9 +1,5 @@
-import { createContext, useReducer } from "react";
-import {
-  getTomorrow,
-  turnaroundInSeconds,
-  secondsPerDay,
-} from "../features/scheduler/utils/date";
+import { createContext, useReducer, useContext } from "react";
+import { getTomorrow, turnaroundInSeconds, secondsPerDay } from "../utils/date";
 
 const initialState = {
   date: getTomorrow(),
@@ -11,6 +7,14 @@ const initialState = {
   flights: [],
   selectedAircraftIdent: null,
   error: null,
+};
+
+export const SCHEDULE_ACTION_TYPES = {
+  SET_AIRCRAFT: "SET_AIRCRAFT",
+  SET_FLIGHTS: "SET_FLIGHTS",
+  ADD_ROTATION: "ADD_ROTATION",
+  REMOVE_ROTATION: "REMOVE_ROTATION",
+  SELECT_AIRCRAFT: "SELECT_AIRCRAFT",
 };
 
 const calculateUsage = (flights) => {
@@ -24,8 +28,8 @@ const calculateUsage = (flights) => {
 
 const scheduleReducer = (state, action) => {
   switch (action.type) {
-    case "SET_DATA": {
-      const { aircraft, flights } = action.payload;
+    case SCHEDULE_ACTION_TYPES.SET_AIRCRAFT: {
+      const aircraft = action.payload;
       return {
         ...state,
         aircraft: aircraft.map((a) => ({
@@ -33,15 +37,21 @@ const scheduleReducer = (state, action) => {
           utilised: 0,
           rotation: [],
         })),
+        selectedAircraftIdent: aircraft[0].ident,
+      };
+    }
+    case SCHEDULE_ACTION_TYPES.SET_FLIGHTS: {
+      const flights = action.payload;
+      return {
+        ...state,
         flights: flights.map((f) => ({
           ...f,
           assignedToAircraft: false,
           aircraftIndent: null,
         })),
-        selectedAircraftIdent: aircraft[0].ident,
       };
     }
-    case "ADD_ROTATION": {
+    case SCHEDULE_ACTION_TYPES.ADD_ROTATION: {
       const { aircraft, flights, selectedAircraftIdent } = state;
       const flight = action.payload;
 
@@ -73,7 +83,7 @@ const scheduleReducer = (state, action) => {
         ),
       };
     }
-    case "REMOVE_ROTATION": {
+    case SCHEDULE_ACTION_TYPES.REMOVE_ROTATION: {
       const { aircraft, flights, selectedAircraftIdent } = state;
       const flightIdentToRemove = action.payload;
 
@@ -109,7 +119,7 @@ const scheduleReducer = (state, action) => {
         flights: [...flights, ...updatedFlights],
       };
     }
-    case "SELECT_AIRCRAFT": {
+    case SCHEDULE_ACTION_TYPES.SELECT_AIRCRAFT: {
       return {
         ...state,
         selectedAircraftIdent: action.payload,
@@ -120,17 +130,40 @@ const scheduleReducer = (state, action) => {
   }
 };
 
-export const ScheduleContext = createContext();
+const ScheduleStateContext = createContext();
+const ScheduleDispatchContext = createContext();
 
-export const ScheduleContextProvider = ({ children }) => {
+export const useScheduleStateContext = () => {
+  const context = useContext(ScheduleStateContext);
+  if (context === undefined) {
+    throw new Error(
+      "useScheduleStateContext must be used within a ScheduleStateContext.Provider"
+    );
+  }
+  return context;
+};
+
+export const useScheduleDispatchContext = () => {
+  const context = useContext(ScheduleDispatchContext);
+  if (context === undefined) {
+    throw new Error(
+      "useScheduleStateContext must be used within a ScheduleDispatchContext.Provider"
+    );
+  }
+  return context;
+};
+
+export const ScheduleProvider = ({ children }) => {
   const [schedule, scheduleDispatch] = useReducer(
     scheduleReducer,
     initialState
   );
 
   return (
-    <ScheduleContext.Provider value={{ schedule, scheduleDispatch }}>
-      {children}
-    </ScheduleContext.Provider>
+    <ScheduleStateContext.Provider value={schedule}>
+      <ScheduleDispatchContext.Provider value={scheduleDispatch}>
+        {children}
+      </ScheduleDispatchContext.Provider>
+    </ScheduleStateContext.Provider>
   );
 };

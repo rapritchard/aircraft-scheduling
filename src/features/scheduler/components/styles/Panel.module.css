@@ -24,10 +24,11 @@
 
 .panelContainer {
   padding: var(--box-spacing);
-  display: flex;
-  flex-direction: column;
-  gap: var(--box-spacing);
   overflow: hidden;
   overflow-y: auto;
   mask-image: linear-gradient(to bottom, black calc(100% - 32px), transparent 100%);
+}
+
+.panelContainer > div:not(:last-child) {
+  margin-bottom: var(--box-spacing);
 }

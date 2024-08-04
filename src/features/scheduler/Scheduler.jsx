@@ -1,5 +1,8 @@
-import { useContext, useEffect, useState } from "react";
-import { ScheduleContext } from "../../stores/schedule-context";
+import { useEffect, useState } from "react";
+import {
+  SCHEDULE_ACTION_TYPES,
+  useScheduleDispatchContext,
+} from "./stores/schedule-context";
 import { fetchAirFleet, fetchFlights } from "./api";
 import { Header } from "./components/header/Header";
 import { AircraftList } from "./components/aircraft-list/AircraftList";
@@ -9,7 +12,7 @@ import styles from "./Scheduler.module.css";
 import { Rotation } from "./components/rotation/Rotation";
 
 export const Scheduler = () => {
-  const { scheduleDispatch } = useContext(ScheduleContext);
+  const dispatch = useScheduleDispatchContext();
   const [loading, isLoading] = useState(true);
 
   useEffect(() => {
@@ -19,12 +22,13 @@ export const Scheduler = () => {
           fetchAirFleet(),
           fetchFlights(),
         ]);
-        scheduleDispatch({
-          type: "SET_DATA",
-          payload: {
-            aircraft,
-            flights,
-          },
+        dispatch({
+          type: SCHEDULE_ACTION_TYPES.SET_AIRCRAFT,
+          payload: aircraft,
+        });
+        dispatch({
+          type: SCHEDULE_ACTION_TYPES.SET_FLIGHTS,
+          payload: flights,
         });
         isLoading(false);
       } catch (error) {

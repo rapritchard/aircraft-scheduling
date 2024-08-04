@@ -1,26 +1,33 @@
-import { useContext, useEffect, useState } from "react";
-import { ScheduleContext } from "../../../../stores/schedule-context";
+import { useEffect, useState } from "react";
+import {
+  SCHEDULE_ACTION_TYPES,
+  useScheduleDispatchContext,
+  useScheduleStateContext,
+} from "../../stores/schedule-context";
 import { secondsPerDay, turnaroundInSeconds } from "../../utils/date";
 import { Flight } from "../flight/Flight";
 
 import styles from "../styles/Panel.module.css";
 
 export const FlightList = () => {
+  const dispatch = useScheduleDispatchContext();
+  const { aircraft, flights, selectedAircraftIdent } =
+    useScheduleStateContext();
   const [selectableFlights, setSelectableFlights] = useState();
   const [selectedFlights, setSelectedFlights] = useState();
-  const { schedule, scheduleDispatch } = useContext(ScheduleContext);
+
   const getSelectedFlights = () => {
-    const selectedAircraft = schedule.aircraft.find(
-      (a) => a.ident === schedule.selectedAircraftIdent
+    const selectedAircraft = aircraft.find(
+      (a) => a.ident === selectedAircraftIdent
     );
     setSelectedFlights(selectedAircraft.rotation);
   };
 
   const getAvailableFlights = () => {
-    const flights = [...schedule.flights];
+    const flightsCopy = [...flights];
 
-    flights.sort((a, b) => a.departuretime - b.departuretime);
-    const availableFlights = flights.filter(
+    flightsCopy.sort((a, b) => a.departuretime - b.departuretime);
+    const availableFlights = flightsCopy.filter(
       (flight) => !flight.assignedToAircraft
     );
 
@@ -43,18 +50,18 @@ export const FlightList = () => {
   };
 
   const handleFlightClick = (ident) => {
-    const flight = schedule.flights.find((f) => f.ident === ident);
-    scheduleDispatch({
-      type: "ADD_ROTATION",
+    const flight = flights.find((f) => f.ident === ident);
+    dispatch({
+      type: SCHEDULE_ACTION_TYPES.ADD_ROTATION,
       payload: flight,
     });
   };
 
   useEffect(() => {
-    if (schedule.aircraft.length) {
+    if (aircraft.length) {
       getSelectedFlights();
     }
-  }, [schedule.aircraft, schedule.selectedAircraftIdent]);
+  }, [aircraft, selectedAircraftIdent]);
 
   useEffect(() => {
     if (selectedFlights) {
@@ -67,7 +74,7 @@ export const FlightList = () => {
       <div className={styles.panelHeading}>
         <h2>Flights</h2>
       </div>
-      <div className={styles.panelContainer}>
+      <div className={styles.panelContainer} data-testid="flightsList">
         {selectableFlights &&
           selectableFlights.map((flight) => (
             <Flight
