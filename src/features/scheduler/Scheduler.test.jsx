@@ -62,7 +62,7 @@ describe("<Scheduler />", () => {
     const { user } = renderComponent();
     await waitForLoading();
 
-    const firstAircraft = `Rotation ${aircraft[0].ident}`;
+    const firstAircraft = "Rotation AS1001";
     const firstRotationTitle = screen.getByText(firstAircraft);
 
     expect(firstRotationTitle).toBeInTheDocument();
@@ -74,7 +74,7 @@ describe("<Scheduler />", () => {
     await user.click(secondAircraft);
     expect(screen.queryByText(firstAircraft)).toBeNull();
 
-    const newRotationTitle = screen.getByText(`Rotation ${aircraft[1].ident}`);
+    const newRotationTitle = screen.getByText("Rotation AS1002");
     expect(newRotationTitle).toBeInTheDocument();
   });
 
