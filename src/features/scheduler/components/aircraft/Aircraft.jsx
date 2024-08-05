@@ -14,15 +14,15 @@ export const Aircraft = ({ base, ident, onClick, selected, utilised }) => {
   return (
     <div
       className={[
-        styles.aircraft,
-        listItemStyles.listItem,
+        styles.container,
+        listItemStyles.container,
         selected ? styles.selected : "",
       ].join(" ")}
       onClick={() => onClick(ident)}
       role="button"
     >
       <h4>{ident}</h4>
-      <div className={styles.aircraftMeta}>
+      <div className={styles.meta}>
         <span>{base}</span>
         <span>
           (

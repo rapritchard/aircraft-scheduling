@@ -41,11 +41,11 @@ export const Rotation = () => {
   }
 
   return (
-    <div className={styles.rotation}>
-      <div className={styles.rotationHeading}>
+    <div className={styles.container}>
+      <div className={styles.heading}>
         <h2>{`Rotation ${currentAircraft.ident}`}</h2>
       </div>
-      <div className={styles.rotationList} data-testid="rotationList">
+      <div className={styles.list} data-testid="rotationList">
         {rotation.map((flight) => (
           <Flight
             key={flight.ident}

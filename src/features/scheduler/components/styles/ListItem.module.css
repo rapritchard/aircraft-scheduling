@@ -1,4 +1,4 @@
-.listItem {
+.container {
   cursor: pointer;
   box-shadow: var(--box-shadow);
   width: 100%;
@@ -8,14 +8,10 @@
   background: #fff;
 }
 
-.listItem:hover {
+.container:hover {
   background-color: var(--box-background-hover-color);
 }
 
-.listItem h4 {
+.container h4 {
   margin: 0 0 8px 0;
-}
-
-.listItem:last-child {
-  margin-bottom: 32px;
 }

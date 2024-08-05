@@ -1,24 +1,24 @@
-.aircraft {
+.container {
   border-left: 4px solid var(--branding-color);
 }
 
-.aircraft.selected {
+.container.selected {
   background-color: var(--box-background-hover-color);
 }
 
-.aircraftMeta {
+.meta {
   display: flex;
   justify-content: space-between;
 }
 
-.aircraftMeta span {
+.meta span {
   align-self: flex-end;
 }
 
-.aircraftMeta span:first-of-type {
+.meta span:first-of-type {
   font-size: 14px;
 }
 
-.aircraftMeta span:last-of-type {
+.meta span:last-of-type {
   font-size: 18px;
 }

@@ -6,7 +6,7 @@ export const Header = () => {
   const { date } = useScheduleStateContext();
   const formattedDate = formatDate(date);
   return (
-    <div className={styles.header}>
+    <div className={styles.heading}>
       <span>{formattedDate}</span>
     </div>
   );

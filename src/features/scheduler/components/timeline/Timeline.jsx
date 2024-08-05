@@ -2,13 +2,13 @@ import { turnaroundInSeconds, secondsPerDay } from "../../utils/date";
 import styles from "./Timeline.module.css";
 
 export const Timeline = ({ flights = [] }) => (
-  <div className={styles.timeline}>
-    <div className={styles.timelineLabels}>
+  <div className={styles.container}>
+    <div className={styles.labels}>
       <span>0:00</span>
       <span>12:00</span>
       <span></span>
     </div>
-    <div className={styles.timelineTrack}>
+    <div className={styles.track}>
       {flights.map((flight) => {
         const { arrivaltime, departuretime, ident } = flight;
         const start = departuretime / secondsPerDay;
@@ -17,14 +17,14 @@ export const Timeline = ({ flights = [] }) => (
         return (
           <div
             key={ident}
-            className={styles.timelineBlock}
+            className={styles.trackBlock}
             style={{
               left: `${start * 100}%`,
               width: `${end * 100 - start * 100}%`,
             }}
           >
             <div
-              className={styles.timelineTurnover}
+              className={styles.turnover}
               style={{
                 width: `${
                   (turnaroundInSeconds / secondsPerDay / (end - start)) * 100
@@ -35,16 +35,16 @@ export const Timeline = ({ flights = [] }) => (
         );
       })}
     </div>
-    <div className={styles.timelineKeys}>
-      <div className={styles.timelineKey}>
+    <div className={styles.keys}>
+      <div className={styles.key}>
         <span className={styles.circle}></span>
         <span>Idle</span>
       </div>
-      <div className={[styles.timelineKey, styles.active].join(" ")}>
+      <div className={[styles.key, styles.active].join(" ")}>
         <span className={styles.circle}></span>
         <span>Scheduled</span>
       </div>
-      <div className={[styles.timelineKey, styles.turnaround].join(" ")}>
+      <div className={[styles.key, styles.turnaround].join(" ")}>
         <span className={styles.circle}></span>
         <span>Turnaround</span>
       </div>

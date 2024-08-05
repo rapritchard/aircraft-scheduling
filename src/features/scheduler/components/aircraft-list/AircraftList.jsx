@@ -19,11 +19,11 @@ export const AircraftList = () => {
   };
 
   return (
-    <div className={styles.panel}>
-      <div className={styles.panelHeading}>
+    <div className={styles.container}>
+      <div className={styles.heading}>
         <h2>Aircraft</h2>
       </div>
-      <div className={styles.panelContainer} data-testid="aircraftList">
+      <div className={styles.list} data-testid="aircraftList">
         {sortedAircraft.map((craft) => (
           <Aircraft
             key={craft.ident}

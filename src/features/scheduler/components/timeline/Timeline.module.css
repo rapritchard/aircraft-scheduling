@@ -1,4 +1,4 @@
-.timeline {
+.container {
   background: #fff;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
@@ -6,49 +6,49 @@
   padding: var(--box-spacing);
 }
 
-.timelineLabels {
+.Labels {
   display: flex;
   min-height: 24px;
 }
 
-.timelineLabels span {
+.labels span {
   font-size: 14px;
   line-height: 24px;
 }
 
-.timelineLabels span:nth-child(odd) {
+.labels span:nth-child(odd) {
   flex: 1;
 }
 
-.timelineTrack {
+.track {
   background-color: var(--idle-color);
   border: 1px solid rgba(19, 19, 21, 0.6);
   height: 40px;
   position: relative;
 }
 
-.timelineBlock,
-.timelineTurnover {
+.trackBlock,
+.turnover {
   height: 100%;
   position: absolute;
 }
 
-.timelineBlock {
+.trackBlock {
   background-color: var(--scheduled-color);
 }
 
-.timelineTurnover {
+.turnover {
   background-color: var(--turnaround-color);
   right: 0;
 }
 
-.timelineKeys {
+.keys {
   display: flex;
   justify-content: space-between;
   margin-top: var(--box-spacing);
 }
 
-.timelineKey {
+.key {
   align-items: center;
   display: inline-flex;
   flex: 1;
@@ -56,7 +56,7 @@
   gap: 4px;
 }
 
-.timelineKey .circle {
+.key .circle {
   background-color: var(--idle-color);
   border-radius: 50%;
   display: block;

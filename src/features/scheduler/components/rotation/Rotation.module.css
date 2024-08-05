@@ -1,4 +1,4 @@
-.rotation {
+.container {
   display: flex;
   flex-basis: 50%;
   flex-direction: column;
@@ -8,18 +8,18 @@
   margin: 0 var(--box-spacing);
 }
 
-.rotationList>div:not(:last-child) {
+.list>div:not(:last-child) {
   margin-bottom: var(--box-spacing);
 }
 
-.rotationHeading {
+.heading {
   background: var(--branding-color);
   border-radius: var(--border-radius) var(--border-radius) 0 0;
   color: #fff;
   text-align: center;
 }
 
-.rotationHeading h2 {
+.heading h2 {
   letter-spacing: 1.25px;
   text-transform: uppercase;
 }

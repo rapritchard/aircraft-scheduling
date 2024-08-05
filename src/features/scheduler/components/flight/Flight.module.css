@@ -1,28 +1,28 @@
-.flight h4 {
+.container h4 {
   text-align: center;
 }
 
-.flightMeta {
+.meta {
   display: flex;
   justify-content: space-between;
   position: relative;
 }
 
-.flightConnector {
+.connector {
   margin: 0 10px;
   height: 16px;
   width: 75%;
   position: relative;
 }
 
-.flightConnector span {
+.connector span {
   width: 100%;
   border-bottom: 1px solid var(--branding-color);
   position: absolute;
   bottom: 40%;
 }
 
-.flightDetails {
+.details {
   display: flex;
   flex-direction: column;
   gap: 8px;
