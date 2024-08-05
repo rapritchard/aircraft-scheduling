@@ -1,3 +1,4 @@
+import cx from "classnames";
 import listItemStyles from "../styles/ListItem.module.css";
 import styles from "./Aircraft.module.css";
 
@@ -13,11 +14,9 @@ export const Aircraft = ({ base, ident, onClick, selected, utilised }) => {
   };
   return (
     <div
-      className={[
-        styles.container,
-        listItemStyles.container,
-        selected ? styles.selected : "",
-      ].join(" ")}
+      className={cx(styles.container, listItemStyles.container, {
+        [styles.selected]: selected,
+      })}
       onClick={() => onClick(ident)}
       role="button"
     >

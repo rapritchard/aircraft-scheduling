@@ -1,3 +1,4 @@
+import cx from "classnames";
 import { turnaroundInSeconds, secondsPerDay } from "../../utils/date";
 import styles from "./Timeline.module.css";
 
@@ -40,11 +41,11 @@ export const Timeline = ({ flights = [] }) => (
         <span className={styles.circle}></span>
         <span>Idle</span>
       </div>
-      <div className={[styles.key, styles.active].join(" ")}>
+      <div className={cx(styles.key, styles.active)}>
         <span className={styles.circle}></span>
         <span>Scheduled</span>
       </div>
-      <div className={[styles.key, styles.turnaround].join(" ")}>
+      <div className={cx(styles.key, styles.turnaround)}>
         <span className={styles.circle}></span>
         <span>Turnaround</span>
       </div>

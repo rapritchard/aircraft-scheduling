@@ -11,7 +11,7 @@
     "test": "vitest run --coverage"
   },
   "dependencies": {
-    "msw": "^2.3.5",
+    "classnames": "^2.5.1",
     "normalize.css": "^8.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
@@ -35,6 +35,7 @@
     "eslint-plugin-sort-destructure-keys": "^2.0.0",
     "eslint-plugin-vitest-globals": "^1.5.0",
     "jsdom": "^24.1.1",
+    "msw": "^2.3.5",
     "prettier": "^3.3.3",
     "vite": "^5.3.4",
     "vite-plugin-pretty-module-classnames": "^1.2.0",
