@@ -6,8 +6,9 @@ import {
 import { Panel } from "../panel/Panel";
 import { FlightCard } from "../flight-card/FlightCard";
 import { ActionTypes } from "../../stores/actions";
-import { secondsPerDay, turnaroundInSeconds } from "../../utils/date";
+import { checkFlightFits } from "../../utils/flight-validation";
 import type { Flight } from "../../types";
+import { isPastMidnight } from "../../utils/date";
 
 export const FlightList = () => {
   const dispatch = useScheduleDispatchContext();
@@ -36,19 +37,29 @@ export const FlightList = () => {
     let validFlights = [];
 
     if (selectedFlights.length) {
-      const latestSelectedFlight = selectedFlights[selectedFlights.length - 1];
+      const firstFlight = selectedFlights[0];
+      let latestSelectedFlight: Flight | undefined;
+      if (selectedFlights.length > 1) {
+        latestSelectedFlight = selectedFlights[selectedFlights.length - 1];
+      }
+
       validFlights = availableFlights.filter((flight) => {
-        const airportMatch = flight.origin === latestSelectedFlight.destination;
-        const validDeparture =
-          flight.departuretime >=
-            latestSelectedFlight.arrivaltime + turnaroundInSeconds &&
-          flight.arrivaltime < secondsPerDay;
-        return airportMatch && validDeparture;
+        const validBeforeFirst = checkFlightFits(flight, firstFlight, "before");
+        const validBeforeLast = checkFlightFits(
+          flight,
+          latestSelectedFlight || firstFlight,
+          "after"
+        );
+        return validBeforeFirst || validBeforeLast;
       });
     } else {
       validFlights = availableFlights;
     }
-    setSelectableFlights(validFlights);
+    setSelectableFlights(
+      validFlights.filter(
+        (f) => !isPastMidnight(f.departuretime, f.arrivaltime)
+      )
+    );
   };
 
   const handleFlightClick = (ident: string) => {
@@ -74,7 +85,7 @@ export const FlightList = () => {
   }, [selectedFlights]);
 
   return (
-    <Panel heading="Flights">
+    <Panel heading="Flights" testId="flightsList">
       {selectableFlights &&
         selectableFlights.map((flight) => (
           <FlightCard

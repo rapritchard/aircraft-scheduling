@@ -118,10 +118,10 @@ module.exports = {
       "error",
       {
         devDependencies: [
-          "./vite.config.js",
-          "./testSetup.js",
-          "**/*.test.js",
-          "**/*.test.jsx",
+          "./vite.config.ts",
+          "./testSetup.ts",
+          "**/*.test.ts",
+          "**/*.test.tsx",
         ],
       },
     ],

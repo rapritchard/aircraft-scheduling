@@ -26,7 +26,20 @@ export const Scheduler = () => {
         });
         dispatch({
           type: ActionTypes.SET_FLIGHTS,
-          payload: flights,
+          payload: [
+            ...flights,
+            {
+              // Flight that goes over midnight for testing,
+              // should never be in the list of flights to choose
+              ident: "AS1999",
+              departuretime: 81000,
+              arrivaltime: 16200,
+              readable_departure: "10:30",
+              readable_arrival: "04:30",
+              origin: "LIPZ",
+              destination: "EGCC",
+            },
+          ],
         });
         isLoading(false);
       } catch (error) {

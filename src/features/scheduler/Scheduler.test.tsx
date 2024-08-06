@@ -143,7 +143,7 @@ describe("<Scheduler />", () => {
       })
     ).not.toBeInTheDocument();
 
-    const rotationFlightElement = rotationList.queryByRole("button", {
+    const rotationFlightElement = rotationList.getByRole("button", {
       name: flight,
     });
 

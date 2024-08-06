@@ -29,3 +29,15 @@ export const formatDate = (dateToFormat: string) => {
   const year = date.getFullYear();
   return `${day}${getNumberWithOrdinal(day)} ${month} ${year}`;
 };
+
+export const isPastMidnight = (departure: number, arrival: number) => {
+  const departureDate = new Date(departure * 1000);
+  const arrivalDate = new Date(arrival * 1000);
+
+  const difference = arrivalDate.getTime() - departureDate.getTime();
+  // Negative means the arrival is tomorrow
+  if (difference < 0) {
+    return true;
+  }
+  return false;
+};

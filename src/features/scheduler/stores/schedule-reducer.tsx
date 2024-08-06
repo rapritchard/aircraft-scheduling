@@ -1,22 +1,28 @@
-import { getTomorrow, turnaroundInSeconds, secondsPerDay } from "../utils/date";
-import type { Flight, ScheduleState } from "../types";
-import { ActionTypes, Actions } from "./actions";
+import { getTomorrow } from "../utils/date";
+import { calculateUsage } from "../utils/calculate-usage";
+import { ActionTypes } from "./actions";
+import { getRotationsToRemove } from "../utils/flight-validation";
+import type { Actions } from "./actions";
+import type { ScheduleState } from "../types";
 
 export const initialState: ScheduleState = {
   date: getTomorrow(),
   aircraft: [],
-  flights: [],
+  flights: [
+    {
+      ident: "MIDNIGHT_DEPARTURE",
+      departuretime: 81000,
+      arrivaltime: 16200,
+      readable_departure: "24:00",
+      readable_arrival: "07:05",
+      origin: "LIPZ",
+      destination: "EGCC",
+      assignedToAircraft: false,
+      aircraftIndent: null,
+    },
+  ],
   selectedAircraftIdent: null,
   error: null,
-};
-
-const calculateUsage = (flights: Flight[]) => {
-  const totalTimeScheduled = flights.reduce(
-    (acc, curr) =>
-      acc + (curr.arrivaltime - curr.departuretime + turnaroundInSeconds),
-    0
-  );
-  return (totalTimeScheduled * 100) / secondsPerDay;
 };
 
 export const scheduleReducer = (
@@ -65,7 +71,9 @@ export const scheduleReducer = (
         return { ...state, error: "Aircraft not found" };
       }
 
-      const updatedRotation = [...foundAircraft.rotation, updatedFlight];
+      const updatedRotation = [...foundAircraft.rotation, updatedFlight].sort(
+        (a, b) => a.departuretime - b.departuretime
+      );
 
       const updatedCraft = {
         ...foundAircraft,
@@ -98,11 +106,19 @@ export const scheduleReducer = (
       const rotationToRemoveIndex = foundAircraft.rotation.findIndex(
         (flight) => flight.ident === flightIdentToRemove
       );
+      const rotation = [...foundAircraft.rotation];
+      const rotationIndexesToRemove = getRotationsToRemove(
+        rotationToRemoveIndex,
+        rotation
+      );
 
-      const rotations = [...foundAircraft.rotation];
+      const updatedRotations = rotation.filter(
+        (_, index) => !rotationIndexesToRemove.includes(index)
+      );
 
-      const updatedRotations = rotations.slice(0, rotationToRemoveIndex);
-      const flightsToUpdate = rotations.slice(rotationToRemoveIndex);
+      const flightsToUpdate = rotation.filter((_, index) =>
+        rotationIndexesToRemove.includes(index)
+      );
 
       const updatedFlights = flightsToUpdate.map((flight) => ({
         ...flight,

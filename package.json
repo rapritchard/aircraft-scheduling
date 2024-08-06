@@ -41,7 +41,6 @@
     "prettier": "^3.3.3",
     "typescript": "^5.2.2",
     "vite": "^5.3.4",
-    "vite-plugin-pretty-module-classnames": "^1.2.0",
     "vitest": "^2.0.5"
   }
 }

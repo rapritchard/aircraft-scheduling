@@ -19,7 +19,7 @@ export const AircraftList = () => {
   };
 
   return (
-    <Panel heading="Aircraft">
+    <Panel heading="Aircraft" testId="aircraftList">
       {sortedAircraft.map((craft) => (
         <AircraftCard
           key={craft.ident}
