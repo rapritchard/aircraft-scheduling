@@ -33,7 +33,7 @@ describe("<Scheduler />", () => {
 
     const elements = [
       screen.getByText("Aircraft"),
-      screen.getByText("Flights"),
+      screen.getByText("Available Flights"),
     ];
 
     elements.forEach((element) => expect(element).toBeInTheDocument());

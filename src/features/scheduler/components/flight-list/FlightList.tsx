@@ -85,8 +85,8 @@ export const FlightList = () => {
   }, [selectedFlights]);
 
   return (
-    <Panel heading="Flights" testId="flightsList">
-      {selectableFlights &&
+    <Panel heading="Available Flights" testId="flightsList">
+      {selectableFlights.length ? (
         selectableFlights.map((flight) => (
           <FlightCard
             key={flight.ident}
@@ -97,7 +97,12 @@ export const FlightList = () => {
             readableArrival={flight.readable_arrival}
             readableDeparture={flight.readable_departure}
           />
-        ))}
+        ))
+      ) : (
+        <div>
+          <p>No flights fit this rotation</p>
+        </div>
+      )}
     </Panel>
   );
 };
