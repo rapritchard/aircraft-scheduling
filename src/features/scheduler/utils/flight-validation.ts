@@ -6,14 +6,12 @@ export const checkFlightFits = (
   selectedFlight: Flight,
   where: "before" | "after"
 ) => {
-  let isValid = false;
-
   if (
     where === "before" &&
     flightToFit.destination === selectedFlight.origin &&
     flightToFit.arrivaltime + turnaroundInSeconds < selectedFlight.departuretime
   ) {
-    isValid = true;
+    return true;
   }
 
   if (
@@ -21,9 +19,9 @@ export const checkFlightFits = (
     flightToFit.origin === selectedFlight.destination &&
     flightToFit.departuretime > selectedFlight.arrivaltime + turnaroundInSeconds
   ) {
-    isValid = true;
+    return true;
   }
-  return isValid;
+  return false;
 };
 
 export const getRotationsToRemove = (
