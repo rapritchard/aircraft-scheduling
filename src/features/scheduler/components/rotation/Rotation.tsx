@@ -1,26 +1,29 @@
 import { useEffect, useState } from "react";
 import {
-  SCHEDULE_ACTION_TYPES,
   useScheduleDispatchContext,
   useScheduleStateContext,
 } from "../../stores/schedule-context";
+import { FlightCard } from "../flight-card/FlightCard";
+import { Timeline } from "../timeline/Timeline";
+import { ActionTypes } from "../../stores/actions";
+import type { Flight, Aircraft } from "../../types";
 
 import styles from "./Rotation.module.css";
-import { Flight } from "../flight/Flight";
-import { Timeline } from "../timeline/Timeline";
 
 export const Rotation = () => {
   const dispatch = useScheduleDispatchContext();
   const { aircraft, selectedAircraftIdent } = useScheduleStateContext();
-  const [currentAircraft, setCurrentAircraft] = useState();
-  const [rotation, setRotation] = useState();
+  const [currentAircraft, setCurrentAircraft] = useState<Aircraft>();
+  const [rotation, setRotation] = useState<Flight[]>([]);
 
   const getSelectedFlights = () => {
     const selectedAircraft = aircraft.find(
       (a) => a.ident === selectedAircraftIdent
     );
-    setCurrentAircraft(selectedAircraft);
-    setRotation(selectedAircraft.rotation);
+    if (selectedAircraft !== undefined) {
+      setCurrentAircraft(selectedAircraft);
+      setRotation(selectedAircraft.rotation);
+    }
   };
 
   useEffect(() => {
@@ -29,9 +32,9 @@ export const Rotation = () => {
     }
   }, [aircraft, selectedAircraftIdent]);
 
-  const handleFlightClick = (ident) => {
+  const handleFlightClick = (ident: string) => {
     dispatch({
-      type: SCHEDULE_ACTION_TYPES.REMOVE_ROTATION,
+      type: ActionTypes.REMOVE_ROTATION,
       payload: ident,
     });
   };
@@ -47,7 +50,7 @@ export const Rotation = () => {
       </div>
       <div className={styles.list} data-testid="rotationList">
         {rotation.map((flight) => (
-          <Flight
+          <FlightCard
             key={flight.ident}
             destination={flight.destination}
             ident={flight.ident}

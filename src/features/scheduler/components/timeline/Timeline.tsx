@@ -1,8 +1,13 @@
 import cx from "classnames";
 import { turnaroundInSeconds, secondsPerDay } from "../../utils/date";
 import styles from "./Timeline.module.css";
+import type { Flight } from "../../types";
 
-export const Timeline = ({ flights = [] }) => (
+interface TimelineProps {
+  flights: Flight[];
+}
+
+export const Timeline = ({ flights }: TimelineProps) => (
   <div className={styles.container}>
     <div className={styles.labels}>
       <span>0:00</span>

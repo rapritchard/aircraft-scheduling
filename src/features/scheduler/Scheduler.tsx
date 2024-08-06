@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import {
-  SCHEDULE_ACTION_TYPES,
-  useScheduleDispatchContext,
-} from "./stores/schedule-context";
+import { useScheduleDispatchContext } from "./stores/schedule-context";
 import { fetchAirFleet, fetchFlights } from "./api";
 import { Header } from "./components/header/Header";
 import { AircraftList } from "./components/aircraft-list/AircraftList";
 import { FlightList } from "./components/flight-list/FlightList";
+import { ActionTypes } from "./stores/actions";
 
 import styles from "./Scheduler.module.css";
 import { Rotation } from "./components/rotation/Rotation";
@@ -23,11 +21,11 @@ export const Scheduler = () => {
           fetchFlights(),
         ]);
         dispatch({
-          type: SCHEDULE_ACTION_TYPES.SET_AIRCRAFT,
+          type: ActionTypes.SET_AIRCRAFT,
           payload: aircraft,
         });
         dispatch({
-          type: SCHEDULE_ACTION_TYPES.SET_FLIGHTS,
+          type: ActionTypes.SET_FLIGHTS,
           payload: flights,
         });
         isLoading(false);

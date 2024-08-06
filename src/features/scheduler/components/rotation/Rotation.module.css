@@ -1,11 +1,18 @@
 .container {
+  background: #fff;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
   display: flex;
   flex-basis: 50%;
   flex-direction: column;
   flex-grow: 1;
   flex-shrink: 0;
-  gap: var(--box-spacing);
   margin: 0 var(--box-spacing);
+}
+
+.list {
+  flex-grow: 1;
+  padding: var(--box-spacing);
 }
 
 .list>div:not(:last-child) {

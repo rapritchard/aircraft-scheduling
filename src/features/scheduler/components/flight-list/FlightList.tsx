@@ -1,26 +1,28 @@
 import { useEffect, useState } from "react";
 import {
-  SCHEDULE_ACTION_TYPES,
   useScheduleDispatchContext,
   useScheduleStateContext,
 } from "../../stores/schedule-context";
+import { Panel } from "../panel/Panel";
+import { FlightCard } from "../flight-card/FlightCard";
+import { ActionTypes } from "../../stores/actions";
 import { secondsPerDay, turnaroundInSeconds } from "../../utils/date";
-import { Flight } from "../flight/Flight";
-
-import styles from "../styles/Panel.module.css";
+import type { Flight } from "../../types";
 
 export const FlightList = () => {
   const dispatch = useScheduleDispatchContext();
   const { aircraft, flights, selectedAircraftIdent } =
     useScheduleStateContext();
-  const [selectableFlights, setSelectableFlights] = useState();
-  const [selectedFlights, setSelectedFlights] = useState();
+  const [selectableFlights, setSelectableFlights] = useState<Flight[]>([]);
+  const [selectedFlights, setSelectedFlights] = useState<Flight[]>([]);
 
   const getSelectedFlights = () => {
     const selectedAircraft = aircraft.find(
       (a) => a.ident === selectedAircraftIdent
     );
-    setSelectedFlights(selectedAircraft.rotation);
+    if (selectedAircraft !== undefined) {
+      setSelectedFlights(selectedAircraft.rotation);
+    }
   };
 
   const getAvailableFlights = () => {
@@ -49,12 +51,14 @@ export const FlightList = () => {
     setSelectableFlights(validFlights);
   };
 
-  const handleFlightClick = (ident) => {
+  const handleFlightClick = (ident: string) => {
     const flight = flights.find((f) => f.ident === ident);
-    dispatch({
-      type: SCHEDULE_ACTION_TYPES.ADD_ROTATION,
-      payload: flight,
-    });
+    if (flight !== undefined) {
+      dispatch({
+        type: ActionTypes.ADD_ROTATION,
+        payload: flight,
+      });
+    }
   };
 
   useEffect(() => {
@@ -70,24 +74,19 @@ export const FlightList = () => {
   }, [selectedFlights]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.heading}>
-        <h2>Flights</h2>
-      </div>
-      <div className={styles.list} data-testid="flightsList">
-        {selectableFlights &&
-          selectableFlights.map((flight) => (
-            <Flight
-              key={flight.ident}
-              destination={flight.destination}
-              ident={flight.ident}
-              onClick={handleFlightClick}
-              origin={flight.origin}
-              readableArrival={flight.readable_arrival}
-              readableDeparture={flight.readable_departure}
-            />
-          ))}
-      </div>
-    </div>
+    <Panel heading="Flights">
+      {selectableFlights &&
+        selectableFlights.map((flight) => (
+          <FlightCard
+            key={flight.ident}
+            destination={flight.destination}
+            ident={flight.ident}
+            onClick={handleFlightClick}
+            origin={flight.origin}
+            readableArrival={flight.readable_arrival}
+            readableDeparture={flight.readable_departure}
+          />
+        ))}
+    </Panel>
   );
 };

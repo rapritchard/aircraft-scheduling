@@ -1,8 +1,22 @@
 import cx from "classnames";
-import listItemStyles from "../styles/ListItem.module.css";
+import { ListItem } from "../list-item/ListItem";
 import styles from "./Aircraft.module.css";
 
-export const Aircraft = ({ base, ident, onClick, selected, utilised }) => {
+interface AircraftCardProps {
+  ident: string;
+  base: string;
+  onClick: (ident: string) => void;
+  selected: boolean;
+  utilised: number;
+}
+
+export const AircraftCard = ({
+  base,
+  ident,
+  onClick,
+  selected,
+  utilised,
+}: AircraftCardProps) => {
   const getUtilisedClass = () => {
     if (utilised > 15 && utilised <= 35) {
       return "#f0710d";
@@ -12,13 +26,13 @@ export const Aircraft = ({ base, ident, onClick, selected, utilised }) => {
     }
     return "#e61f1f";
   };
+
   return (
-    <div
-      className={cx(styles.container, listItemStyles.container, {
+    <ListItem
+      className={cx(styles.container, {
         [styles.selected]: selected,
       })}
       onClick={() => onClick(ident)}
-      role="button"
     >
       <h4>{ident}</h4>
       <div className={styles.meta}>
@@ -35,6 +49,6 @@ export const Aircraft = ({ base, ident, onClick, selected, utilised }) => {
           )
         </span>
       </div>
-    </div>
+    </ListItem>
   );
 };

@@ -1,7 +1,8 @@
-import { createContext, useReducer, useContext } from "react";
 import { getTomorrow, turnaroundInSeconds, secondsPerDay } from "../utils/date";
+import type { Flight, ScheduleState } from "../types";
+import { ActionTypes, Actions } from "./actions";
 
-const initialState = {
+export const initialState: ScheduleState = {
   date: getTomorrow(),
   aircraft: [],
   flights: [],
@@ -9,15 +10,7 @@ const initialState = {
   error: null,
 };
 
-export const SCHEDULE_ACTION_TYPES = {
-  SET_AIRCRAFT: "SET_AIRCRAFT",
-  SET_FLIGHTS: "SET_FLIGHTS",
-  ADD_ROTATION: "ADD_ROTATION",
-  REMOVE_ROTATION: "REMOVE_ROTATION",
-  SELECT_AIRCRAFT: "SELECT_AIRCRAFT",
-};
-
-const calculateUsage = (flights) => {
+const calculateUsage = (flights: Flight[]) => {
   const totalTimeScheduled = flights.reduce(
     (acc, curr) =>
       acc + (curr.arrivaltime - curr.departuretime + turnaroundInSeconds),
@@ -26,9 +19,12 @@ const calculateUsage = (flights) => {
   return (totalTimeScheduled * 100) / secondsPerDay;
 };
 
-const scheduleReducer = (state, action) => {
+export const scheduleReducer = (
+  state: ScheduleState,
+  action: Actions
+): ScheduleState => {
   switch (action.type) {
-    case SCHEDULE_ACTION_TYPES.SET_AIRCRAFT: {
+    case ActionTypes.SET_AIRCRAFT: {
       const aircraft = action.payload;
       return {
         ...state,
@@ -40,7 +36,7 @@ const scheduleReducer = (state, action) => {
         selectedAircraftIdent: aircraft[0].ident,
       };
     }
-    case SCHEDULE_ACTION_TYPES.SET_FLIGHTS: {
+    case ActionTypes.SET_FLIGHTS: {
       const flights = action.payload;
       return {
         ...state,
@@ -51,7 +47,7 @@ const scheduleReducer = (state, action) => {
         })),
       };
     }
-    case SCHEDULE_ACTION_TYPES.ADD_ROTATION: {
+    case ActionTypes.ADD_ROTATION: {
       const { aircraft, flights, selectedAircraftIdent } = state;
       const flight = action.payload;
 
@@ -64,6 +60,10 @@ const scheduleReducer = (state, action) => {
       const foundAircraft = aircraft.find(
         (a) => a.ident === selectedAircraftIdent
       );
+
+      if (foundAircraft === undefined) {
+        return { ...state, error: "Aircraft not found" };
+      }
 
       const updatedRotation = [...foundAircraft.rotation, updatedFlight];
 
@@ -83,13 +83,18 @@ const scheduleReducer = (state, action) => {
         ),
       };
     }
-    case SCHEDULE_ACTION_TYPES.REMOVE_ROTATION: {
+    case ActionTypes.REMOVE_ROTATION: {
       const { aircraft, flights, selectedAircraftIdent } = state;
       const flightIdentToRemove = action.payload;
 
       const foundAircraft = aircraft.find(
         (a) => a.ident === selectedAircraftIdent
       );
+
+      if (foundAircraft === undefined) {
+        return { ...state, error: "Aircraft not found" };
+      }
+
       const rotationToRemoveIndex = foundAircraft.rotation.findIndex(
         (flight) => flight.ident === flightIdentToRemove
       );
@@ -119,7 +124,7 @@ const scheduleReducer = (state, action) => {
         flights: [...flights, ...updatedFlights],
       };
     }
-    case SCHEDULE_ACTION_TYPES.SELECT_AIRCRAFT: {
+    case ActionTypes.SELECT_AIRCRAFT: {
       return {
         ...state,
         selectedAircraftIdent: action.payload,
@@ -128,42 +133,4 @@ const scheduleReducer = (state, action) => {
     default:
       return state;
   }
-};
-
-const ScheduleStateContext = createContext();
-const ScheduleDispatchContext = createContext();
-
-export const useScheduleStateContext = () => {
-  const context = useContext(ScheduleStateContext);
-  if (context === undefined) {
-    throw new Error(
-      "useScheduleStateContext must be used within a ScheduleStateContext.Provider"
-    );
-  }
-  return context;
-};
-
-export const useScheduleDispatchContext = () => {
-  const context = useContext(ScheduleDispatchContext);
-  if (context === undefined) {
-    throw new Error(
-      "useScheduleStateContext must be used within a ScheduleDispatchContext.Provider"
-    );
-  }
-  return context;
-};
-
-export const ScheduleProvider = ({ children }) => {
-  const [schedule, scheduleDispatch] = useReducer(
-    scheduleReducer,
-    initialState
-  );
-
-  return (
-    <ScheduleStateContext.Provider value={schedule}>
-      <ScheduleDispatchContext.Provider value={scheduleDispatch}>
-        {children}
-      </ScheduleDispatchContext.Provider>
-    </ScheduleStateContext.Provider>
-  );
 };

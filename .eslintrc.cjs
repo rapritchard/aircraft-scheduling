@@ -1,8 +1,14 @@
 module.exports = {
   root: true,
-  extends: ["airbnb-base", "plugin:vitest-globals/recommended", "prettier"],
+  extends: [
+    "airbnb-base",
+    "plugin:vitest-globals/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+  ],
   env: { browser: true, es2020: true, "vitest-globals/env": true },
   ignorePatterns: ["dist", ".eslintrc.cjs"],
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
@@ -26,6 +32,7 @@ module.exports = {
     "no-await-in-loop": "off",
     "no-param-reassign": "off",
     "no-continue": "off",
+    "no-shadow": "off",
     "max-len": [
       "error",
       120,
@@ -116,18 +123,6 @@ module.exports = {
           "**/*.test.js",
           "**/*.test.jsx",
         ],
-      },
-    ],
-    "no-unused-vars": [
-      "error",
-      {
-        args: "all",
-        argsIgnorePattern: "^_",
-        caughtErrors: "all",
-        caughtErrorsIgnorePattern: "^_",
-        destructuredArrayIgnorePattern: "^_",
-        varsIgnorePattern: "^_",
-        ignoreRestSiblings: true,
       },
     ],
   },

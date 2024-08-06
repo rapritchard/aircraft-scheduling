@@ -1,20 +1,24 @@
-import cx from "classnames";
-import listItemStyles from "../styles/ListItem.module.css";
+import { ListItem } from "../list-item/ListItem";
 import styles from "./Flight.module.css";
 
-export const Flight = ({
+interface FlightCardProps {
+  ident: string;
+  readableDeparture: string;
+  readableArrival: string;
+  origin: string;
+  destination: string;
+  onClick: (ident: string) => void;
+}
+
+export const FlightCard = ({
   destination,
   ident,
   onClick,
   origin,
   readableArrival,
   readableDeparture,
-}) => (
-  <div
-    className={cx(styles.container, listItemStyles.container)}
-    onClick={() => onClick(ident)}
-    role="button"
-  >
+}: FlightCardProps) => (
+  <ListItem className={styles.container} onClick={() => onClick(ident)}>
     <h4>{ident}</h4>
     <div className={styles.meta}>
       <div className={styles.details}>
@@ -29,5 +33,5 @@ export const Flight = ({
         <span>{readableArrival}</span>
       </div>
     </div>
-  </div>
+  </ListItem>
 );

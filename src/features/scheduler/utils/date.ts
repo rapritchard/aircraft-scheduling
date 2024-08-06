@@ -1,7 +1,7 @@
 export const secondsPerDay = 86400;
 export const turnaroundInSeconds = 1200;
 
-const getNumberWithOrdinal = (number) => {
+const getNumberWithOrdinal = (number: number) => {
   if (number > 3 && number < 21) return "th";
   switch (number % 10) {
     case 1:
@@ -22,7 +22,7 @@ export const getTomorrow = (currentDate = new Date()) => {
   return tomororw.toISOString();
 };
 
-export const formatDate = (dateToFormat) => {
+export const formatDate = (dateToFormat: string) => {
   const date = new Date(dateToFormat);
   const day = date.getDate();
   const month = date.toLocaleString("default", { month: "long" });

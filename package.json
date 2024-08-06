@@ -22,6 +22,8 @@
     "@testing-library/user-event": "^14.5.2",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
     "@vitejs/plugin-react": "^4.3.1",
     "@vitest/coverage-v8": "^2.0.5",
     "eslint": "^8.57.0",
@@ -37,6 +39,7 @@
     "jsdom": "^24.1.1",
     "msw": "^2.3.5",
     "prettier": "^3.3.3",
+    "typescript": "^5.2.2",
     "vite": "^5.3.4",
     "vite-plugin-pretty-module-classnames": "^1.2.0",
     "vitest": "^2.0.5"
